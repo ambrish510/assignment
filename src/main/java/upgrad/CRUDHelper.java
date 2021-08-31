@@ -84,7 +84,13 @@ public class CRUDHelper {
         System.out.println("------ Displaying Top 5 Mobiles ------");
         // Call printAllAttributes to display the attributes on the Screen
         MongoCursor<Document> cursor = collection.find(eq("Category","Mobile")).limit(5).cursor();
-        while(cursor.hasNext()){/**
+        while(cursor.hasNext()){
+
+
+
+
+
+            /**
          * Display number of products in each group
          * @param collection
          */
@@ -123,6 +129,9 @@ public class CRUDHelper {
             PrintHelper.printAllAttributes(doc);
         }
     }
+
+
+
 
     /**
      * Display Wired Headphones
