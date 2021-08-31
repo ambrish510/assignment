@@ -32,6 +32,7 @@ public class Driver {
         MongoClient mongoClient = null;
 
         try {
+
             // Initializing the Mongo DB connection
             mongoClient = MongoClients.create(mongoConnectionString);
             MongoDatabase db = mongoClient.getDatabase(mongoDBName);
@@ -44,7 +45,6 @@ public class Driver {
             }
 
             //Initializing the MySQL Connection
-
             sqlConnection = DriverManager.getConnection(sqlURL,sqlUserName,sqlPassword);
             Statement statement = sqlConnection.createStatement();
 
@@ -62,7 +62,8 @@ public class Driver {
             System.out.println();
 
             /**
-             * Import data into MongoDB
+             * Import data into MongoDB from MySQL
+             *
              */
 
             //Import the data from MySQL Mobiles Table into Mongo DB products collection

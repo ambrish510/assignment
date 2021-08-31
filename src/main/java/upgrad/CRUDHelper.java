@@ -16,11 +16,9 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class CRUDHelper {
 
-
     /**
      * Import the Data into MongoDB from MySQL remote server
      */
-
     public static void importDataIntoMongoDB(
             Connection sqlConnection,
             Statement statement,
@@ -41,7 +39,8 @@ public class CRUDHelper {
             while(resultSet.next()){
                 Document doc = new Document();
                 for(int i=1;i<=colCount;i++){
-                    doc.append(resultSetMetaData.getColumnLabel(i),resultSet.getString(resultSetMetaData.getColumnLabel(i)))
+                    doc.append(
+                            resultSetMetaData.getColumnLabel(i),resultSet.getString(resultSetMetaData.getColumnLabel(i)))
                             .append("Category",Category);
                 }
 
@@ -59,9 +58,7 @@ public class CRUDHelper {
        catch(SQLException e){
             System.out.println("Got Exception.");
             e.printStackTrace();
-
        }
-
     }
 
     /**
@@ -87,7 +84,27 @@ public class CRUDHelper {
         System.out.println("------ Displaying Top 5 Mobiles ------");
         // Call printAllAttributes to display the attributes on the Screen
         MongoCursor<Document> cursor = collection.find(eq("Category","Mobile")).limit(5).cursor();
-        while(cursor.hasNext()){
+        while(cursor.hasNext()){/**
+         * Display number of products in each group
+         * @param collection
+         */
+            public static void displayProductCountByCategory(MongoCollection<Document> collection) {
+                System.out.println("------ Displaying Product Count by categories ------");
+                // Call printProductCountInCategory to display the attributes on the Screen
+                AggregateIterable<Document> Itr = collection.aggregate(
+                        Arrays.asList(
+                                Aggregates.group("$Category", Accumulators.sum("Count",1))
+                        )
+                );
+
+                MongoCursor<Document> cursor = Itr.cursor();
+
+                while(cursor.hasNext()){
+                    Document doc = cursor.next();
+                    PrintHelper.printProductCountInCategory(doc
+                    );
+                }
+            }
             Document doc = cursor.next();
             PrintHelper.printAllAttributes(doc);
         }
@@ -104,29 +121,6 @@ public class CRUDHelper {
         while(cursor.hasNext()){
             Document doc = cursor.next();
             PrintHelper.printAllAttributes(doc);
-        }
-    }
-
-
-    /**
-     * Display number of products in each group
-     * @param collection
-     */
-    public static void displayProductCountByCategory(MongoCollection<Document> collection) {
-        System.out.println("------ Displaying Product Count by categories ------");
-        // Call printProductCountInCategory to display the attributes on the Screen
-        AggregateIterable<Document> Itr = collection.aggregate(
-                Arrays.asList(
-                        Aggregates.group("$Category", Accumulators.sum("Count",1))
-                )
-        );
-
-        MongoCursor<Document> cursor = Itr.cursor();
-
-        while(cursor.hasNext()){
-            Document doc = cursor.next();
-            PrintHelper.printProductCountInCategory(doc
-            );
         }
     }
 
