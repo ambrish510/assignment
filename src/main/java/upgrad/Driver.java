@@ -54,6 +54,12 @@ public class Driver {
             }
 
             /**
+             * Dropping the collection if already exist to avoid the duplicate import of data every time when code is run
+             */
+            db.getCollection(mongoCollectinName).drop();
+            System.out.println("Existing collection " + mongoCollectinName + " dropped successfully");
+
+            /**
              * Import data into MongoDB
              */
 

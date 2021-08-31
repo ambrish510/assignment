@@ -8,18 +8,11 @@ import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Sorts;
 import org.bson.Document;
-import sun.net.www.content.text.PlainTextInputStream;
-
-import javax.swing.event.DocumentEvent;
-import javax.swing.plaf.basic.BasicColorChooserUI;
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.Arrays;
-
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Projections.excludeId;
-import static com.mongodb.client.model.Projections.fields;
+
 
 public class CRUDHelper {
 
@@ -124,7 +117,7 @@ public class CRUDHelper {
         // Call printProductCountInCategory to display the attributes on the Screen
         AggregateIterable<Document> Itr = collection.aggregate(
                 Arrays.asList(
-                        Aggregates.group("$Category", Accumulators.sum("count",1))
+                        Aggregates.group("$Category", Accumulators.sum("Count",1))
                 )
         );
 
