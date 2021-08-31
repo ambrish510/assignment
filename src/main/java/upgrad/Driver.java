@@ -5,7 +5,6 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-
 import java.sql.*;
 
 public class Driver {
@@ -41,6 +40,7 @@ public class Driver {
             //Verifying connection to Mongo DB established
             if(mongoClient!=null){
                 System.out.println("Connected to Mongo DB successfully");
+                System.out.println();
             }
 
             //Initializing the MySQL Connection
@@ -51,6 +51,7 @@ public class Driver {
             //Verifying connection  to MySQL established
             if(sqlConnection!=null){
                 System.out.println("Connected to MySQL DB successfully");
+                System.out.println();
             }
 
             /**
@@ -58,6 +59,7 @@ public class Driver {
              */
             db.getCollection(mongoCollectinName).drop();
             System.out.println("Existing collection " + mongoCollectinName + " dropped successfully");
+            System.out.println();
 
             /**
              * Import data into MongoDB
@@ -114,10 +116,16 @@ public class Driver {
             try{
                 if(sqlConnection!=null){
                     sqlConnection.close();
+                    System.out.println();
+                    System.out.println("MySQL DB connection closed successfully");
+                    System.out.println();
+
                 }
 
                 if(mongoClient!=null){
                     mongoClient.close();
+                    System.out.println("Mongo DB connection closed successfully");
+                    System.out.println();
                 }
             }
             catch(SQLException e){
